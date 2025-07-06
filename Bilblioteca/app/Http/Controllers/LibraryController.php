@@ -48,6 +48,14 @@ class LibraryController extends Controller
         }
 
         $userBook->status = $userBook->status === 'read' ? 'pending' : 'read';
+        
+        // Si se marca como leído, actualizar completed_at
+        if ($userBook->status === 'read') {
+            $userBook->completed_at = now();
+        } else {
+            $userBook->completed_at = null;
+        }
+        
         $userBook->save();
 
         return response()->json(['success' => true, 'status' => $userBook->status]);

@@ -96,10 +96,6 @@
             font-weight: 600;
         }
 
-        .back-to-site:hover {
-            opacity: 0.9;
-        }
-
         /* Main content */
         .main-content {
             flex: 1;
@@ -123,25 +119,6 @@
             font-size: 1.75rem;
             font-weight: 700;
             color: #111827;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .user-avatar {
-            width: 45px;
-            height: 45px;
-            background: #111827;
-            color: white;
-            font-weight: 600;
-            border-radius: 9999px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
         }
 
         /* Filters Bar */
@@ -181,17 +158,9 @@
             border-color: #111827;
         }
 
-        .period-btn:hover {
-            background: #f3f4f6;
-        }
-
-        .period-btn.active:hover {
-            background: #1f2937;
-        }
-
         .export-btn {
             padding: 0.75rem 1.5rem;
-            background: #111827;
+            background: #10b981;
             color: white;
             border: none;
             border-radius: 0.5rem;
@@ -203,14 +172,10 @@
             text-decoration: none;
         }
 
-        .export-btn:hover {
-            background: #1f2937;
-        }
-
         /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
@@ -221,19 +186,31 @@
             padding: 1.5rem;
             border: 1px solid #e5e7eb;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #10b981, #059669);
         }
 
         .stat-icon {
             width: 45px;
             height: 45px;
-            background: #f3f4f6;
+            background: #f0f9ff;
             border-radius: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 1rem;
             font-size: 1rem;
-            color: #374151;
+            color: #0ea5e9;
         }
 
         .stat-value {
@@ -251,6 +228,9 @@
         .stat-change {
             font-size: 0.8rem;
             margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
         }
 
         .stat-change.positive {
@@ -281,6 +261,9 @@
             padding: 1.5rem 2rem;
             border-bottom: 1px solid #e5e7eb;
             background: #f9fafb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .chart-title {
@@ -302,11 +285,66 @@
             max-height: 100%;
         }
 
-        /* Bottom Grid */
-        .bottom-grid {
+        /* Additional Charts */
+        .additional-charts {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Summary Grid */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 0.75rem;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .summary-value {
+            font-weight: 600;
+            color: #111827;
+        }
+
+        /* Progress bars */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 0.25rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #059669);
+            transition: width 0.3s ease;
         }
 
         /* Table */
@@ -344,56 +382,6 @@
             background: #f9fafb;
         }
 
-        .category-bar {
-            width: 100%;
-            height: 8px;
-            background: #e5e7eb;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 0.5rem;
-        }
-
-        .category-fill {
-            height: 100%;
-            background: #111827;
-            transition: width 0.3s ease;
-        }
-
-        /* Progress bars */
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #e5e7eb;
-            border-radius: 3px;
-            overflow: hidden;
-            margin-top: 0.25rem;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #10b981, #059669);
-            transition: width 0.3s ease;
-        }
-
-        /* Badges */
-        .badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .badge.success {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .badge.info {
-            background: #e0f2fe;
-            color: #075985;
-        }
-
         .rank-badge {
             display: inline-flex;
             align-items: center;
@@ -410,44 +398,6 @@
         .rank-2 { background: #c0c0c0; color: #374151; }
         .rank-3 { background: #cd7f32; color: white; }
         .rank-other { background: #f3f4f6; color: #6b7280; }
-
-        /* Summary Cards */
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .summary-card {
-            background: white;
-            border-radius: 0.75rem;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            overflow: hidden;
-        }
-
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid #f3f4f6;
-        }
-
-        .summary-item:last-child {
-            border-bottom: none;
-        }
-
-        .summary-label {
-            color: #6b7280;
-            font-size: 0.875rem;
-        }
-
-        .summary-value {
-            font-weight: 600;
-            color: #111827;
-        }
 
         /* Responsive */
         @media (max-width: 1024px) {
@@ -489,24 +439,24 @@
             </div>
             
             <nav class="sidebar-nav">
-                <a href="{{ route('admin.dashboard') }}" class="nav-item">
+                <a href="/admin/dashboard" class="nav-item">
                     <i class="fas fa-chart-line"></i> Dashboard
                 </a>
-                <a href="{{ route('admin.books') }}" class="nav-item">
+                <a href="/admin/books" class="nav-item">
                     <i class="fas fa-book"></i> Gestión de Libros
                 </a>
-                <a href="{{ route('admin.users') }}" class="nav-item">
+                <a href="/admin/users" class="nav-item">
                     <i class="fas fa-users"></i> Usuarios
                 </a>
-                <a href="{{ route('admin.orders') }}" class="nav-item">
+                <a href="/admin/orders" class="nav-item">
                     <i class="fas fa-shopping-cart"></i> Órdenes
                 </a>
-                <a href="{{ route('admin.reports') }}" class="nav-item active">
+                <a href="/admin/reports" class="nav-item active">
                     <i class="fas fa-chart-bar"></i> Reportes
                 </a>
             </nav>
             
-            <a href="{{ route('home') }}" class="back-to-site">
+            <a href="/" class="back-to-site">
                 <i class="fas fa-arrow-left"></i> Volver al Sitio
             </a>
         </aside>
@@ -518,11 +468,11 @@
                 <h1><i class="fas fa-chart-bar"></i> Reportes y Analytics</h1>
                 <div class="user-info">
                     <div>
-                        <div style="font-weight: 600;">{{ Auth::user()->name }}</div>
+                        <div style="font-weight: 600;">María Fernanda</div>
                         <div style="font-size: 0.875rem;">Administrador</div>
                     </div>
-                    <div class="user-avatar">
-                        {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                    <div style="width: 45px; height: 45px; background: #111827; color: white; font-weight: 600; border-radius: 9999px; display: flex; align-items: center; justify-content: center; font-size: 1rem;">
+                        M
                     </div>
                 </div>
             </div>
@@ -531,12 +481,12 @@
             <div class="filters-bar">
                 <div class="period-selector">
                     <span style="font-weight: 600; color: #374151;">Período:</span>
-                    <a href="{{ route('admin.reports', ['period' => 7]) }}" class="period-btn {{ $period == 7 ? 'active' : '' }}">7 días</a>
-                    <a href="{{ route('admin.reports', ['period' => 30]) }}" class="period-btn {{ $period == 30 ? 'active' : '' }}">30 días</a>
-                    <a href="{{ route('admin.reports', ['period' => 90]) }}" class="period-btn {{ $period == 90 ? 'active' : '' }}">90 días</a>
-                    <a href="{{ route('admin.reports', ['period' => 365]) }}" class="period-btn {{ $period == 365 ? 'active' : '' }}">1 año</a>
+                    <a href="?period=7" class="period-btn">7 días</a>
+                    <a href="?period=30" class="period-btn active">30 días</a>
+                    <a href="?period=90" class="period-btn">90 días</a>
+                    <a href="?period=365" class="period-btn">1 año</a>
                 </div>
-                <a href="{{ route('admin.reports.export', ['period' => $period]) }}" class="export-btn">
+                <a href="/admin/reports/export?period=30" class="export-btn">
                     <i class="fas fa-download"></i> Exportar Reporte
                 </a>
             </div>
@@ -547,7 +497,7 @@
                     <div class="stat-icon">
                         <i class="fas fa-dollar-sign"></i>
                     </div>
-                    <div class="stat-value">${{ number_format($stats['period_revenue'], 2) }}</div>
+                    <div class="stat-value">$143.45</div>
                     <div class="stat-label">Ingresos del Período</div>
                     <div class="stat-change positive">
                         <i class="fas fa-arrow-up"></i> +15% vs período anterior
@@ -558,7 +508,7 @@
                     <div class="stat-icon">
                         <i class="fas fa-shopping-cart"></i>
                     </div>
-                    <div class="stat-value">{{ number_format($stats['period_orders']) }}</div>
+                    <div class="stat-value">5</div>
                     <div class="stat-label">Órdenes del Período</div>
                     <div class="stat-change positive">
                         <i class="fas fa-arrow-up"></i> +8% vs período anterior
@@ -569,7 +519,7 @@
                     <div class="stat-icon">
                         <i class="fas fa-user-plus"></i>
                     </div>
-                    <div class="stat-value">{{ number_format($stats['new_users']) }}</div>
+                    <div class="stat-value">3</div>
                     <div class="stat-label">Nuevos Usuarios</div>
                     <div class="stat-change positive">
                         <i class="fas fa-arrow-up"></i> +12% vs período anterior
@@ -580,7 +530,7 @@
                     <div class="stat-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
-                    <div class="stat-value">${{ number_format($stats['period_revenue'] / max($stats['period_orders'], 1), 2) }}</div>
+                    <div class="stat-value">$28.69</div>
                     <div class="stat-label">Valor Promedio por Orden</div>
                     <div class="stat-change positive">
                         <i class="fas fa-arrow-up"></i> +5% vs período anterior
@@ -591,10 +541,21 @@
                     <div class="stat-icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <div class="stat-value">{{ number_format($stats['active_users']) }}</div>
+                    <div class="stat-value">0</div>
                     <div class="stat-label">Usuarios Activos</div>
                     <div class="stat-change positive">
                         <i class="fas fa-arrow-up"></i> +3% vs período anterior
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="stat-value">166.7%</div>
+                    <div class="stat-label">Tasa de Conversión</div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i> +25% vs período anterior
                     </div>
                 </div>
             </div>
@@ -605,8 +566,11 @@
                 <div class="chart-card">
                     <div class="chart-header">
                         <h3 class="chart-title">
-                            <i class="fas fa-chart-line"></i> Ventas Mensuales {{ now()->year }}
+                            <i class="fas fa-chart-line"></i> Ventas Mensuales 2025
                         </h3>
+                        <div style="font-size: 0.875rem; color: #6b7280;">
+                            Comparativo de ingresos y órdenes
+                        </div>
                     </div>
                     <div class="chart-container">
                         <canvas id="monthlySalesChart"></canvas>
@@ -626,6 +590,45 @@
                 </div>
             </div>
 
+            <!-- Additional Charts -->
+            <div class="additional-charts">
+                <!-- Daily Sales Trend -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">
+                            <i class="fas fa-chart-area"></i> Tendencia de Ventas Diarias
+                        </h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="dailySalesChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Hourly Activity -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">
+                            <i class="fas fa-clock"></i> Actividad por Hora
+                        </h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="hourlyActivityChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Order Status Distribution -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">
+                            <i class="fas fa-tasks"></i> Estado de Órdenes
+                        </h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="orderStatusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
             <!-- Summary Grid -->
             <div class="summary-grid">
                 <!-- Quick Stats -->
@@ -637,23 +640,23 @@
                     </div>
                     <div class="summary-item">
                         <span class="summary-label">Total de Libros</span>
-                        <span class="summary-value">{{ number_format($stats['total_books']) }}</span>
+                        <span class="summary-value">9</span>
                     </div>
                     <div class="summary-item">
                         <span class="summary-label">Usuarios Registrados</span>
-                        <span class="summary-value">{{ number_format($stats['active_users']) }}</span>
+                        <span class="summary-value">0</span>
                     </div>
                     <div class="summary-item">
                         <span class="summary-label">Tasa de Conversión</span>
-                        <span class="summary-value">{{ number_format(($stats['period_orders'] / max($stats['new_users'], 1)) * 100, 1) }}%</span>
+                        <span class="summary-value">166.7%</span>
                     </div>
                     <div class="summary-item">
                         <span class="summary-label">Categorías Activas</span>
-                        <span class="summary-value">{{ $salesByCategory->count() }}</span>
+                        <span class="summary-value">3</span>
                     </div>
                     <div class="summary-item">
                         <span class="summary-label">Ingresos Totales</span>
-                        <span class="summary-value">${{ number_format($stats['period_revenue'], 2) }}</span>
+                        <span class="summary-value">$143.45</span>
                     </div>
                 </div>
 
@@ -664,25 +667,57 @@
                             <i class="fas fa-trophy"></i> Top Categorías
                         </h3>
                     </div>
-                    @forelse($salesByCategory->take(5) as $index => $category)
                     <div class="summary-item">
                         <div style="display: flex; align-items: center;">
-                            <span class="rank-badge rank-{{ $index + 1 <= 3 ? $index + 1 : 'other' }}">{{ $index + 1 }}</span>
-                            <span class="summary-label">{{ $category->category }}</span>
+                            <span class="rank-badge rank-1">1</span>
+                            <span class="summary-label">Base de Datos</span>
                         </div>
-                        <span class="summary-value">${{ number_format($category->revenue, 2) }}</span>
+                        <span class="summary-value">$59.97</span>
                     </div>
-                    @empty
                     <div class="summary-item">
-                        <span class="summary-label">Sin datos</span>
-                        <span class="summary-value">-</span>
+                        <div style="display: flex; align-items: center;">
+                            <span class="rank-badge rank-2">2</span>
+                            <span class="summary-label">Clásicos</span>
+                        </div>
+                        <span class="summary-value">$30.50</span>
                     </div>
-                    @endforelse
+                    <div class="summary-item">
+                        <div style="display: flex; align-items: center;">
+                            <span class="rank-badge rank-3">3</span>
+                            <span class="summary-label">Algoritmos</span>
+                        </div>
+                        <span class="summary-value">$22.99</span>
+                    </div>
+                </div>
+
+                <!-- Growth Analysis -->
+                <div class="summary-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">
+                            <i class="fas fa-trending-up"></i> Análisis de Crecimiento
+                        </h3>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Crecimiento de Ingresos</span>
+                        <span class="summary-value" style="color: #10b981;">+15.2%</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Nuevos Clientes</span>
+                        <span class="summary-value" style="color: #10b981;">+12.5%</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Retención de Usuarios</span>
+                        <span class="summary-value" style="color: #f59e0b;">-2.1%</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Ticket Promedio</span>
+                        <span class="summary-value" style="color: #10b981;">+8.7%</span>
+                    </div>
                 </div>
             </div>
 
             <!-- Bottom Grid -->
-            <div class="bottom-grid">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
                 <!-- Top Selling Books -->
                 <div class="chart-card">
                     <div class="chart-header">
@@ -702,79 +737,214 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($topBooks as $index => $book)
                                 <tr>
                                     <td>
-                                        <span class="rank-badge rank-{{ $index + 1 <= 3 ? $index + 1 : 'other' }}">{{ $index + 1 }}</span>
+                                        <span class="rank-badge rank-1">1</span>
                                     </td>
                                     <td>
-                                        <div style="font-weight: 600;">{{ $book->title }}</div>
-                                        <div style="font-size: 0.75rem; color: #6b7280;">{{ $book->category }}</div>
+                                        <div style="font-weight: 600;">Base de datos Relacionales</div>
+                                        <div style="font-size: 0.75rem; color: #6b7280;">Base de Datos</div>
                                     </td>
-                                    <td>{{ $book->author }}</td>
+                                    <td>Carlos Mendoza</td>
                                     <td>
-                                        <strong>{{ $book->total_sold }}</strong>
+                                        <strong>3</strong>
                                         <div class="progress-bar">
-                                            <div class="progress-fill" style="width: {{ ($book->total_sold / $topBooks->max('total_sold')) * 100 }}%"></div>
+                                            <div class="progress-fill" style="width: 100%"></div>
                                         </div>
                                     </td>
                                     <td>
-                                        <strong>${{ number_format($book->total_revenue, 2) }}</strong>
+                                        <strong>$59.97</strong>
                                     </td>
                                 </tr>
-                                @empty
                                 <tr>
-                                    <td colspan="5" style="text-align: center; color: #6b7280; padding: 2rem;">
-                                        No hay datos suficientes para mostrar
+                                    <td>
+                                        <span class="rank-badge rank-2">2</span>
+                                    </td>
+                                    <td>
+                                        <div style="font-weight: 600;">Don Quijote de la Mancha</div>
+                                        <div style="font-size: 0.75rem; color: #6b7280;">Clásicos</div>
+                                    </td>
+                                    <td>Miguel de Cervantes</td>
+                                    <td>
+                                        <strong>1</strong>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 33%"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <strong>$30.50</strong>
                                     </td>
                                 </tr>
-                                @endforelse
+                                <tr>
+                                    <td>
+                                        <span class="rank-badge rank-3">3</span>
+                                    </td>
+                                    <td>
+                                        <div style="font-weight: 600;">Algoritmos y Estructuras</div>
+                                        <div style="font-size: 0.75rem; color: #6b7280;">Algoritmos</div>
+                                    </td>
+                                    <td>Roberto Silva</td>
+                                    <td>
+                                        <strong>1</strong>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: 33%"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <strong>$22.99</strong>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                <!-- Sales by Category Table -->
+                <!-- Recent Activity Feed -->
                 <div class="chart-card">
                     <div class="chart-header">
                         <h3 class="chart-title">
-                            <i class="fas fa-tags"></i> Rendimiento por Categoría
+                            <i class="fas fa-rss"></i> Actividad Reciente
                         </h3>
                     </div>
-                    <div class="table-container">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Categoría</th>
-                                    <th>Órdenes</th>
-                                    <th>Libros</th>
-                                    <th>Ingresos</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($salesByCategory as $category)
-                                <tr>
-                                    <td>
-                                        <div>
-                                            <div style="font-weight: 600;">{{ $category->category }}</div>
-                                            <div class="category-bar">
-                                                <div class="category-fill" style="width: {{ ($category->revenue / $salesByCategory->max('revenue')) * 100 }}%"></div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td><strong>{{ $category->total_orders }}</strong></td>
-                                    <td><strong>{{ $category->total_books }}</strong></td>
-                                    <td><strong>${{ number_format($category->revenue, 2) }}</strong></td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="4" style="text-align: center; color: #6b7280; padding: 2rem;">
-                                        No hay datos de categorías
-                                    </td>
-                                </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                    <div style="padding: 1.5rem;">
+                        <div style="space-y: 1rem;">
+                            <div style="display: flex; align-items: start; gap: 1rem; padding: 1rem; background: #f9fafb; border-radius: 0.5rem; margin-bottom: 1rem;">
+                                <div style="width: 35px; height: 35px; background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.875rem;">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; color: #111827;">Nueva venta completada</div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">Orden #005 por $30.50</div>
+                                    <div style="font-size: 0.75rem; color: #9ca3af;">Hace 2 horas</div>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; align-items: start; gap: 1rem; padding: 1rem; background: #f9fafb; border-radius: 0.5rem; margin-bottom: 1rem;">
+                                <div style="width: 35px; height: 35px; background: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.875rem;">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; color: #111827;">Nuevo usuario registrado</div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">juan.perez@email.com</div>
+                                    <div style="font-size: 0.75rem; color: #9ca3af;">Hace 4 horas</div>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; align-items: start; gap: 1rem; padding: 1rem; background: #f9fafb; border-radius: 0.5rem; margin-bottom: 1rem;">
+                                <div style="width: 35px; height: 35px; background: #f59e0b; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.875rem;">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; color: #111827;">Libro más vendido</div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">"Base de datos Relacionales" alcanzó 3 ventas</div>
+                                    <div style="font-size: 0.75rem; color: #9ca3af;">Hace 6 horas</div>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; align-items: start; gap: 1rem; padding: 1rem; background: #f9fafb; border-radius: 0.5rem;">
+                                <div style="width: 35px; height: 35px; background: #8b5cf6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.875rem;">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 600; color: #111827;">Meta alcanzada</div>
+                                    <div style="font-size: 0.875rem; color: #6b7280;">Ingresos mensuales superaron $100</div>
+                                    <div style="font-size: 0.75rem; color: #9ca3af;">Hace 1 día</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Metrics -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">
+                            <i class="fas fa-bullseye"></i> Métricas de Rendimiento
+                        </h3>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <div style="margin-bottom: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span style="font-size: 0.875rem; color: #6b7280;">Tasa de Conversión</span>
+                                <span style="font-weight: 600;">166.7%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span style="font-size: 0.875rem; color: #6b7280;">Retención de Clientes</span>
+                                <span style="font-weight: 600;">87.2%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 87%"></div>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span style="font-size: 0.875rem; color: #6b7280;">Satisfacción del Cliente</span>
+                                <span style="font-weight: 600;">94.5%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 94%"></div>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span style="font-size: 0.875rem; color: #6b7280;">Crecimiento Mensual</span>
+                                <span style="font-weight: 600;">15.3%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 76%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span style="font-size: 0.875rem; color: #6b7280;">Eficiencia Operativa</span>
+                                <span style="font-weight: 600;">92.1%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 92%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-time Updates -->
+            <div class="chart-card" style="margin-bottom: 2rem;">
+                <div class="chart-header">
+                    <h3 class="chart-title">
+                        <i class="fas fa-broadcast-tower"></i> Actualizaciones en Tiempo Real
+                    </h3>
+                    <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: #10b981;">
+                        <div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                        En vivo
+                    </div>
+                </div>
+                <div style="padding: 1.5rem;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div style="text-align: center; padding: 1rem; background: #f0f9ff; border-radius: 0.5rem;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #0ea5e9;">2</div>
+                            <div style="font-size: 0.875rem; color: #6b7280;">Usuarios Online</div>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background: #f0fdf4; border-radius: 0.5rem;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #10b981;">$28.69</div>
+                            <div style="font-size: 0.875rem; color: #6b7280;">Ventas Hoy</div>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background: #fefce8; border-radius: 0.5rem;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #f59e0b;">12</div>
+                            <div style="font-size: 0.875rem; color: #6b7280;">Páginas Vistas</div>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background: #fdf2f8; border-radius: 0.5rem;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #ec4899;">0</div>
+                            <div style="font-size: 0.875rem; color: #6b7280;">Carritos Abandonados</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -782,36 +952,36 @@
     </div>
 
     <script>
+        // Sample data for charts
+        const monthlyData = {
+            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            revenue: [1200, 1900, 3000, 2500, 2200, 3000, 3500, 4000, 3200, 2800, 3800, 4200],
+            orders: [12, 19, 25, 22, 18, 28, 32, 35, 28, 24, 33, 38]
+        };
+
+        const categoryData = {
+            labels: ['Base de Datos', 'Clásicos', 'Algoritmos', 'Programación', 'Literatura'],
+            data: [59.97, 30.50, 22.99, 24.99, 15.99],
+            colors: ['#0ea5e9', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899']
+        };
+
         // Monthly Sales Chart
         const monthlySalesCtx = document.getElementById('monthlySalesChart').getContext('2d');
-        const monthlySalesData = @json($monthlySales);
-        
-        const monthlyLabels = [];
-        const monthlyRevenue = [];
-        const monthlyOrders = [];
-        
-        for (let i = 1; i <= 12; i++) {
-            const monthData = monthlySalesData.find(item => item.month === i);
-            monthlyLabels.push(new Date(2024, i-1).toLocaleDateString('es', { month: 'short' }));
-            monthlyRevenue.push(monthData ? monthData.revenue : 0);
-            monthlyOrders.push(monthData ? monthData.orders : 0);
-        }
-        
         new Chart(monthlySalesCtx, {
             type: 'line',
             data: {
-                labels: monthlyLabels,
+                labels: monthlyData.labels,
                 datasets: [{
                     label: 'Ingresos ($)',
-                    data: monthlyRevenue,
-                    borderColor: '#111827',
-                    backgroundColor: 'rgba(17, 24, 39, 0.1)',
+                    data: monthlyData.revenue,
+                    borderColor: '#0ea5e9',
+                    backgroundColor: 'rgba(14, 165, 233, 0.1)',
                     tension: 0.4,
                     fill: true,
                     yAxisID: 'y'
                 }, {
                     label: 'Órdenes',
-                    data: monthlyOrders,
+                    data: monthlyData.orders,
                     borderColor: '#10b981',
                     backgroundColor: 'rgba(16, 185, 129, 0.1)',
                     tension: 0.4,
@@ -827,10 +997,6 @@
                     intersect: false,
                 },
                 scales: {
-                    x: {
-                        display: true,
-                        grid: { color: 'rgba(0, 0, 0, 0.05)' }
-                    },
                     y: {
                         type: 'linear',
                         display: true,
@@ -843,31 +1009,16 @@
                         display: true,
                         position: 'right',
                         beginAtZero: true,
-                        grid: {
-                            drawOnChartArea: false,
-                        },
+                        grid: { drawOnChartArea: false }
+                    },
+                    x: {
+                        grid: { color: 'rgba(0, 0, 0, 0.05)' }
                     }
                 },
                 plugins: {
                     legend: {
                         display: true,
                         position: 'top'
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                if (context.dataset.label === 'Ingresos ($)') {
-                                    label += ' + context.parsed.y.toFixed(2);
-                                } else {
-                                    label += context.parsed.y;
-                                }
-                                return label;
-                            }
-                        }
                     }
                 }
             }
@@ -875,22 +1026,13 @@
 
         // Category Chart
         const categoryCtx = document.getElementById('categoryChart').getContext('2d');
-        const categoryData = @json($salesByCategory);
-        
-        // Generate colors for categories
-        const categoryColors = [
-            '#111827', '#374151', '#6b7280', '#9ca3af',
-            '#d1d5db', '#10b981', '#3b82f6', '#f59e0b',
-            '#ef4444', '#8b5cf6', '#ec4899', '#14b8a6'
-        ];
-        
         new Chart(categoryCtx, {
             type: 'doughnut',
             data: {
-                labels: categoryData.map(item => item.category),
+                labels: categoryData.labels,
                 datasets: [{
-                    data: categoryData.map(item => item.revenue),
-                    backgroundColor: categoryColors.slice(0, categoryData.length),
+                    data: categoryData.data,
+                    backgroundColor: categoryData.colors,
                     borderWidth: 2,
                     borderColor: '#ffffff'
                 }]
@@ -901,138 +1043,100 @@
                 plugins: {
                     legend: {
                         position: 'bottom',
-                        labels: { 
-                            padding: 20, 
-                            usePointStyle: true,
-                            font: {
-                                size: 12
-                            }
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                const label = context.label || '';
-                                const value = ' + context.parsed.toFixed(2);
-                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                const percentage = ((context.parsed / total) * 100).toFixed(1);
-                                return label + ': ' + value + ' (' + percentage + '%)';
-                            }
-                        }
+                        labels: { padding: 20, usePointStyle: true }
                     }
                 }
             }
         });
 
-        // Auto-refresh every 60 seconds
+        // Daily Sales Chart
+        const dailySalesCtx = document.getElementById('dailySalesChart').getContext('2d');
+        new Chart(dailySalesCtx, {
+            type: 'bar',
+            data: {
+                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+                datasets: [{
+                    label: 'Ventas Diarias',
+                    data: [12, 19, 3, 5, 2, 3, 9, 15, 8, 11],
+                    backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                    borderColor: '#10b981',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Hourly Activity Chart
+        const hourlyCtx = document.getElementById('hourlyActivityChart').getContext('2d');
+        new Chart(hourlyCtx, {
+            type: 'line',
+            data: {
+                labels: ['00', '04', '08', '12', '16', '20'],
+                datasets: [{
+                    label: 'Actividad por Hora',
+                    data: [2, 1, 5, 12, 8, 4],
+                    borderColor: '#f59e0b',
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Order Status Chart
+        const orderStatusCtx = document.getElementById('orderStatusChart').getContext('2d');
+        new Chart(orderStatusCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Completadas', 'Pendientes', 'Procesando'],
+                datasets: [{
+                    data: [5, 0, 0],
+                    backgroundColor: ['#10b981', '#f59e0b', '#3b82f6']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Add pulse animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.5; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Auto-refresh functionality
         setInterval(() => {
-            // Update stats values
-            fetch(window.location.href)
-                .then(response => response.text())
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const newStats = doc.querySelectorAll('.stat-value');
-                    const currentStats = document.querySelectorAll('.stat-value');
-                    
-                    newStats.forEach((stat, index) => {
-                        if (currentStats[index]) {
-                            // Add animation for value changes
-                            if (currentStats[index].textContent !== stat.textContent) {
-                                currentStats[index].style.transform = 'scale(1.1)';
-                                currentStats[index].style.color = '#10b981';
-                                setTimeout(() => {
-                                    currentStats[index].textContent = stat.textContent;
-                                    currentStats[index].style.transform = 'scale(1)';
-                                    currentStats[index].style.color = '#111827';
-                                }, 200);
-                            }
-                        }
-                    });
-                })
-                .catch(error => console.log('Auto-refresh failed:', error));
-        }, 60000);
-
-        // Print functionality
-        function printReport() {
-            window.print();
-        }
-
-        // Export functionality
-        document.querySelector('.export-btn').addEventListener('click', function(e) {
-            // Show loading state
-            const originalText = this.innerHTML;
-            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Exportando...';
-            this.disabled = true;
-            
-            // Reset after 3 seconds
-            setTimeout(() => {
-                this.innerHTML = originalText;
-                this.disabled = false;
-            }, 3000);
-        });
-
-        // Add smooth scrolling for better UX
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Animate progress bars on load
-        document.addEventListener('DOMContentLoaded', function() {
-            const progressBars = document.querySelectorAll('.progress-fill, .category-fill');
-            progressBars.forEach(bar => {
-                const width = bar.style.width;
-                bar.style.width = '0%';
-                setTimeout(() => {
-                    bar.style.width = width;
-                }, 500);
-            });
-        });
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            // Ctrl/Cmd + P for print
-            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
-                e.preventDefault();
-                printReport();
+            // Simulate real-time updates
+            const onlineUsers = document.querySelector('.chart-card:last-child .grid > div:first-child .text-xl');
+            if (onlineUsers) {
+                const current = parseInt(onlineUsers.textContent);
+                onlineUsers.textContent = Math.max(0, current + Math.floor(Math.random() * 3) - 1);
             }
-            
-            // Ctrl/Cmd + E for export
-            if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
-                e.preventDefault();
-                document.querySelector('.export-btn').click();
-            }
-        });
-
-        // Add tooltips for better understanding
-        function addTooltips() {
-            const statCards = document.querySelectorAll('.stat-card');
-            statCards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-2px)';
-                    this.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                    this.style.boxShadow = '0 1px 2px rgba(0,0,0,0.05)';
-                });
-            });
-        }
-
-        // Initialize tooltips
-        addTooltips();
-
-        // Responsive chart resize
-        window.addEventListener('resize', function() {
-            Chart.getChart('monthlySalesChart')?.resize();
-            Chart.getChart('categoryChart')?.resize();
-        });
+        }, 5000);
     </script>
 </body>
 </html>

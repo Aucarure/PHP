@@ -56,7 +56,7 @@ class BookController extends Controller
     {
         // Optimización: limitar la cantidad de libros para la página principal
         // y solo obtener los campos necesarios para mejorar el rendimiento
-        $books = Book::select('id', 'title', 'author', 'price', 'category', 'image')
+        $books = Book::select('id', 'title', 'author', 'price', 'category', 'cover_image')
                     ->latest()
                     ->take(8) // Limitar a 8 libros más recientes
                     ->get();
@@ -83,7 +83,7 @@ class BookController extends Controller
             return response()->json([]);
         }
 
-        $books = Book::select('id', 'title', 'author', 'price', 'image')
+        $books = Book::select('id', 'title', 'author', 'price', 'cover_image')
                     ->where('title', 'like', '%' . $searchTerm . '%')
                     ->orWhere('author', 'like', '%' . $searchTerm . '%')
                     ->limit(5)

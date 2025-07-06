@@ -464,73 +464,141 @@ class AdminController extends Controller
         return response()->stream($callback, 200, $headers);
     }
 
-    // ============ REPORTES ============
+// En AdminController.php - Método reports mejorado
+
+public function reports(Request $request)
+{
+    $period = $request->get('period', '30'); // días
+    $startDate = now()->subDays($period);
+
+    // Ventas por categoría
+    $salesByCategory = DB::table('order_items')
+        ->join('books', 'order_items.book_id', '=', 'books.id')
+        ->join('orders', 'order_items.order_id', '=', 'orders.id')
+        ->where('orders.status', 'completed')
+        ->where('orders.created_at', '>=', $startDate)
+        ->select('books.category', 
+                DB::raw('COUNT(*) as total_orders'),
+                DB::raw('SUM(order_items.quantity) as total_books'),
+                DB::raw('SUM(order_items.price * order_items.quantity) as revenue'))
+        ->groupBy('books.category')
+        ->orderBy('revenue', 'desc')
+        ->get();
+
+    // Ventas mensuales del año actual
+    $monthlySales = Order::where('status', 'completed')
+        ->whereYear('created_at', now()->year)
+        ->selectRaw('MONTH(created_at) as month, COUNT(*) as orders, SUM(total) as revenue')
+        ->groupBy('month')
+        ->orderBy('month')
+        ->get();
+
+    // Ventas diarias para el gráfico de tendencias (últimos 30 días)
+    $dailySales = Order::where('status', 'completed')
+        ->where('created_at', '>=', now()->subDays(30))
+        ->selectRaw('DATE(created_at) as date, COUNT(*) as orders, SUM(total) as revenue')
+        ->groupBy('date')
+        ->orderBy('date')
+        ->get();
+
+    // Top libros más vendidos
+    $topBooks = DB::table('order_items')
+        ->join('books', 'order_items.book_id', '=', 'books.id')
+        ->join('orders', 'order_items.order_id', '=', 'orders.id')
+        ->where('orders.status', 'completed')
+        ->where('orders.created_at', '>=', $startDate)
+        ->select('books.id', 'books.title', 'books.author', 'books.category', 'books.price',
+                DB::raw('SUM(order_items.quantity) as total_sold'),
+                DB::raw('SUM(order_items.price * order_items.quantity) as total_revenue'))
+        ->groupBy('books.id', 'books.title', 'books.author', 'books.category', 'books.price')
+        ->orderBy('total_sold', 'desc')
+        ->limit(10)
+        ->get();
+
+    // Estadísticas de usuarios
+    $userStats = [
+        'new_users_period' => User::where('role', 'user')
+                                  ->where('created_at', '>=', $startDate)
+                                  ->count(),
+        'active_users' => User::where('role', 'user')
+                             ->whereHas('orders')
+                             ->count(),
+        'users_with_purchases' => User::where('role', 'user')
+                                     ->whereHas('orders', function($q) {
+                                         $q->where('status', 'completed');
+                                     })
+                                     ->count(),
+        'average_books_per_user' => DB::table('user_books')
+                                     ->join('users', 'user_books.user_id', '=', 'users.id')
+                                     ->where('users.role', 'user')
+                                     ->count() / max(User::where('role', 'user')->count(), 1)
+    ];
+
+    // Análisis de crecimiento
+    $previousPeriodStart = now()->subDays($period * 2);
+    $previousPeriodEnd = $startDate;
     
-    public function reports(Request $request)
-    {
-        $period = $request->get('period', '30'); // días
-        $startDate = now()->subDays($period);
+    $currentPeriodRevenue = Order::where('status', 'completed')
+                                 ->where('created_at', '>=', $startDate)
+                                 ->sum('total');
+    
+    $previousPeriodRevenue = Order::where('status', 'completed')
+                                  ->whereBetween('created_at', [$previousPeriodStart, $previousPeriodEnd])
+                                  ->sum('total');
 
-        // Ventas por categoría
-        $salesByCategory = DB::table('order_items')
-            ->join('books', 'order_items.book_id', '=', 'books.id')
-            ->join('orders', 'order_items.order_id', '=', 'orders.id')
-            ->where('orders.status', 'completed')
-            ->where('orders.created_at', '>=', $startDate)
-            ->select('books.category', 
-                    DB::raw('COUNT(*) as total_orders'),
-                    DB::raw('SUM(order_items.quantity) as total_books'),
-                    DB::raw('SUM(order_items.price * order_items.quantity) as revenue'))
-            ->groupBy('books.category')
-            ->orderBy('revenue', 'desc')
-            ->get();
+    $growthData = [
+        'revenue_growth' => $previousPeriodRevenue > 0 
+            ? (($currentPeriodRevenue - $previousPeriodRevenue) / $previousPeriodRevenue) * 100 
+            : 0,
+        'current_revenue' => $currentPeriodRevenue,
+        'previous_revenue' => $previousPeriodRevenue
+    ];
 
-        // Ventas mensuales del año actual
-        $monthlySales = Order::where('status', 'completed')
-            ->whereYear('created_at', now()->year)
-            ->selectRaw('MONTH(created_at) as month, COUNT(*) as orders, SUM(total) as revenue')
-            ->groupBy('month')
-            ->orderBy('month')
-            ->get();
+    // Horarios de mayor actividad
+    $hourlyActivity = Order::where('created_at', '>=', $startDate)
+        ->selectRaw('HOUR(created_at) as hour, COUNT(*) as orders_count')
+        ->groupBy('hour')
+        ->orderBy('hour')
+        ->get();
 
-        // Top libros más vendidos
-        $topBooks = DB::table('order_items')
-            ->join('books', 'order_items.book_id', '=', 'books.id')
-            ->join('orders', 'order_items.order_id', '=', 'orders.id')
-            ->where('orders.status', 'completed')
-            ->where('orders.created_at', '>=', $startDate)
-            ->select('books.id', 'books.title', 'books.author', 'books.category', 'books.price',
-                    DB::raw('SUM(order_items.quantity) as total_sold'),
-                    DB::raw('SUM(order_items.price * order_items.quantity) as total_revenue'))
-            ->groupBy('books.id', 'books.title', 'books.author', 'books.category', 'books.price')
-            ->orderBy('total_sold', 'desc')
-            ->limit(10)
-            ->get();
+    // Estados de órdenes
+    $orderStatusStats = Order::where('created_at', '>=', $startDate)
+        ->selectRaw('status, COUNT(*) as count, SUM(total) as total_amount')
+        ->groupBy('status')
+        ->get();
 
-        // Estadísticas generales
-        $stats = [
-            'period_revenue' => Order::where('status', 'completed')
-                                   ->where('created_at', '>=', $startDate)
-                                   ->sum('total'),
-            'period_orders' => Order::where('created_at', '>=', $startDate)->count(),
-            'new_users' => User::where('role', 'user')
-                              ->where('created_at', '>=', $startDate)
-                              ->count(),
-            'total_books' => Book::count(),
-            'active_users' => User::where('role', 'user')
-                                 ->whereHas('orders')
-                                 ->count()
-        ];
+    // Estadísticas generales
+    $stats = [
+        'period_revenue' => $currentPeriodRevenue,
+        'period_orders' => Order::where('created_at', '>=', $startDate)->count(),
+        'new_users' => $userStats['new_users_period'],
+        'total_books' => Book::count(),
+        'active_users' => $userStats['active_users'],
+        'conversion_rate' => $userStats['new_users_period'] > 0 
+            ? ($userStats['users_with_purchases'] / $userStats['new_users_period']) * 100 
+            : 0,
+        'average_order_value' => Order::where('status', 'completed')
+                                     ->where('created_at', '>=', $startDate)
+                                     ->avg('total') ?? 0,
+        'books_per_order' => DB::table('order_items')
+                            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+                            ->where('orders.created_at', '>=', $startDate)
+                            ->avg('quantity') ?? 0
+    ];
 
-        return view('admin.reports', compact(
-            'salesByCategory', 
-            'monthlySales', 
-            'topBooks', 
-            'stats', 
-            'period'
-        ));
-    }
-
+    return view('admin.reports', compact(
+        'salesByCategory', 
+        'monthlySales', 
+        'dailySales',
+        'topBooks', 
+        'stats', 
+        'period',
+        'userStats',
+        'growthData',
+        'hourlyActivity',
+        'orderStatusStats'
+    ));
+}
     // Agregar este método al AdminController.php
 
 public function reportsExport(Request $request)

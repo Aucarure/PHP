@@ -72,8 +72,18 @@
                         
                         <!-- Book Image -->
                         <div style="height: 220px; background-color: #f3f4f6; display: flex; align-items: center; justify-content: center; position: relative;">
-                            @if($book->image)
-                                <img src="{{ $book->image }}" alt="{{ $book->title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                            @if($book->cover_image)
+                                <img src="{{ $book->cover_image }}" 
+                                     alt="{{ $book->title }}" 
+                                     style="width: 100%; height: 100%; object-fit: cover;"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                <!-- Fallback si la imagen no carga -->
+                                <div style="color: #9ca3af; text-align: center; display: none;">
+                                    <svg width="64" height="64" fill="currentColor" viewBox="0 0 20 20" style="margin: 0 auto;">
+                                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <p style="font-size: 0.875rem; margin-top: 0.5rem; font-weight: 500;">Sin imagen</p>
+                                </div>
                             @else
                                 <div style="color: #9ca3af; text-align: center;">
                                     <svg width="64" height="64" fill="currentColor" viewBox="0 0 20 20" style="margin: 0 auto;">
@@ -100,17 +110,13 @@
                                 </span>
                             </div>
                             
-                            <!-- Price and Stock -->
+                            <!-- Price and Digital Status -->
                             <div style="margin-top: auto;">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                                     <span style="color: #6366f1; font-size: 1.25rem; font-weight: 700;">
                                         ${{ number_format($book->price, 2) }}
                                     </span>
-                                    @if($book->stock > 0)
-                                        <span style="color: #059669; font-size: 0.75rem; font-weight: 500;">{{ $book->stock }} disponibles</span>
-                                    @else
-                                        <span style="color: #dc2626; font-size: 0.75rem; font-weight: 500;">Agotado</span>
-                                    @endif
+                                    <span style="color: #059669; font-size: 0.75rem; font-weight: 500;">Digital</span>
                                 </div>
                                 
                                 <a href="{{ route('books.show', $book) }}" 

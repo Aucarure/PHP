@@ -19,6 +19,7 @@ class UserBook extends Model
         'total_pages',
         'progress_percentage',
         'last_read_at',
+        'completed_at',  // ✅ Campo agregado
         'bookmarks',
     ];
 
@@ -26,6 +27,7 @@ class UserBook extends Model
         'is_favorite' => 'boolean',
         'purchased_at' => 'datetime',
         'last_read_at' => 'datetime',
+        'completed_at' => 'datetime',  // ✅ Cast agregado
         'bookmarks' => 'array',
         'progress_percentage' => 'decimal:2',
     ];
@@ -57,6 +59,7 @@ class UserBook extends Model
             // Auto-marcar como leído si está al 95% o más
             if ($this->progress_percentage >= 95 && $this->status !== 'read') {
                 $this->status = 'read';
+                $this->completed_at = now();  // ✅ Guardar fecha de completado
             }
         }
 
@@ -75,6 +78,37 @@ class UserBook extends Model
             return 'Leyendo (' . round($this->progress_percentage) . '%)';
         } else {
             return 'Terminado';
+        }
+    }
+
+    /**
+     * Verificar si el libro está completado
+     */
+    public function isCompleted(): bool
+    {
+        return $this->status === 'read' && $this->completed_at !== null;
+    }
+
+    /**
+     * Obtener tiempo estimado de lectura restante
+     */
+    public function getEstimatedReadingTimeAttribute(): string
+    {
+        if ($this->progress_percentage >= 100) {
+            return 'Completado';
+        }
+
+        $remainingPercentage = 100 - $this->progress_percentage;
+        $averageReadingTime = 30; // minutos por 10% del libro (ajustable)
+        
+        $estimatedMinutes = ($remainingPercentage / 10) * $averageReadingTime;
+        
+        if ($estimatedMinutes < 60) {
+            return round($estimatedMinutes) . ' min';
+        } else {
+            $hours = floor($estimatedMinutes / 60);
+            $minutes = $estimatedMinutes % 60;
+            return $hours . 'h ' . round($minutes) . 'm';
         }
     }
 }

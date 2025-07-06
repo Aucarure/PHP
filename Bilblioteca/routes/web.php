@@ -58,10 +58,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/library/{userBook}/toggle-favorite', [LibraryController::class, 'toggleFavorite'])->name('library.toggle-favorite');
     Route::delete('/library/{userBook}', [LibraryController::class, 'destroy'])->name('library.destroy');
 
-    // Rutas del lector de libros
+    // Rutas del lector de libros - ACTUALIZADAS PARA VISOR DE PDF
     Route::get('/reader/{book}', [BookReaderController::class, 'show'])->name('reader.show');
     Route::post('/reader/{book}/progress', [BookReaderController::class, 'updateProgress'])->name('reader.progress');
     Route::post('/reader/{book}/bookmark', [BookReaderController::class, 'addBookmark'])->name('reader.bookmark');
+    Route::post('/reader/{book}/completed', [BookReaderController::class, 'markCompleted'])->name('reader.completed');
 });
 
 // Rutas de Administración (protegidas por middleware admin)
@@ -92,16 +93,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/orders/{order}/print', [AdminController::class, 'orderPrint'])->name('orders.print');
     Route::patch('/orders/{order}/status', [AdminController::class, 'orderUpdateStatus'])->name('orders.status');
     Route::get('/orders/export/csv', [AdminController::class, 'ordersExport'])->name('orders.export');
-    // Dentro del grupo admin, agrega esta línea:
     Route::get('/orders/{order}/details', [AdminController::class, 'orderDetails'])->name('orders.details');
     
     // Reportes - COMPLETO
     Route::get('/reports', [AdminController::class, 'reports'])->name('reports');
+    Route::get('/reports/export', [AdminController::class, 'reportsExport'])->name('reports.export');
     
     // API auxiliares
     Route::get('/api/categories', [AdminController::class, 'getCategories'])->name('api.categories');
-    
-    Route::get('/reports/export', [AdminController::class, 'reportsExport'])->name('reports.export');
 });
 
 require __DIR__.'/auth.php';
